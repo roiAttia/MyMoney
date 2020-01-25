@@ -1,9 +1,7 @@
 package roiattia.com.mymoney.db.expense
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
+import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
-import androidx.room.PrimaryKey
 import roiattia.com.mymoney.db.category.CategoryEntity
 import java.util.*
 
@@ -11,13 +9,16 @@ import java.util.*
     tableName = "expense",
     foreignKeys = [ForeignKey(
         entity = CategoryEntity::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("categoryId"),
-        onDelete = CASCADE)])
+        parentColumns = arrayOf("category_id"),
+        childColumns = arrayOf("category_id"),
+        onDelete = CASCADE)],
+    indices = [Index("category_id")])
 class ExpenseEntity (
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "expense_id")
     val id : Int,
+    @ColumnInfo(name = "category_id")
     val categoryId : Int,
     val name : String,
     val totalAmount : Double,
